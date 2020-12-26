@@ -1,13 +1,31 @@
 <template>
     <div class="componente">
-        <h2>Alterar os Dados de Usuário</h2>
-        <p>Edite as informações</p>
+        <p>Idade: {{age}}</p>
+        <button @click="changeAge()">chane age</button>
     </div>
 </template>
 
 <script>
+
+    import EventBus from '@/EventBus'
+
 export default {
-    
+    props: {
+        age: {
+            type: Number
+        }
+    },
+
+
+    methods: {
+
+
+        changeAge()
+        {
+            this.age = 100
+            EventBus.$emit('changeAge', this.age)
+        }
+    }
 }
 </script>
 

@@ -1,11 +1,12 @@
 <template>
     <div class="container">
-        <h1>Componente Usuário</h1>
-        <p>Esse é um componente muito legal!</p>
+        <p>Nome: {{name}}</p>
+        <p>Idade: {{age}}</p>
+        <button @click="changeName()">change name</button>
         <hr>
         <div class="componentes">
-            <app-usuario-info />
-            <app-usuario-editar />
+            <app-usuario-info :name="name" @resetEvent="setName($event)" :callback="callback" :age="age" />
+            <app-usuario-editar :age="age" />
         </div>
     </div>
 </template>
@@ -15,7 +16,29 @@ import AppUsuarioInfo from './UsuarioInfo'
 import AppUsuarioEditar from './UsuarioEditar'
 
 export default {
-    components: { AppUsuarioInfo, AppUsuarioEditar }
+    components: { AppUsuarioInfo, AppUsuarioEditar },
+
+    data() {
+        return {
+            name: 'Pedro',
+            age: 23
+        }
+    },
+
+    methods: {
+        changeName() {
+            this.name = 'Anna'
+        },
+
+        setName($event)
+        {
+            this.name = $event
+        },
+
+        callback() {
+            this.name = 'Pedro'
+        }
+    }
 }
 </script>
 
