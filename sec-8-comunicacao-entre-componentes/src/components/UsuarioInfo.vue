@@ -37,13 +37,13 @@ export default {
         }
     },
 
-        created()
-        {
-            EventBus.$on('changeAge', ($event) => {
+    created()
+    {
+        EventBus.$on('changeAge', ($event) => {
 
-                this.age = $event
-            })
-        }
+            this.age = $event
+        })
+    }
 }
 </script>
 
