@@ -1,8 +1,8 @@
 <template>
     <div class="citacoes">
         <span>
-            <button @click="numero--">&lt;</button>
-            <button @click="numero++">&gt;</button>
+            <button @click="numero--">--</button>
+            <button @click="numero++">++</button>
         </span>
         {{ numero }} {{ indice }}
     </div>
