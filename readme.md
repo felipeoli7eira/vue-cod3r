@@ -267,3 +267,194 @@ return {
 	}
 }
 ```
+
+# [ Recursos vue ]
+
+```
+    watch: {
+
+        user: {
+            deep: true,
+            handler() {
+                code...
+            }
+        }
+    }
+```
+
+### Midificadores de evento
+
+```
+    <input v-model.lazy="func()" /> quando o elemento perde o foco
+
+    <input v-model.trim="func()" /> remove espaços em branco antes e depois da string
+
+    <input v-model.number="func()" /> converte uma string numérica em número
+```
+
+### Trabalhar com checkbox no Vue
+para trabalhar com checkbox no Vue, é preciso fazer com que cada uma das opções existentes de checagem, apontem para um mesmo array em data()
+```
+    <input type="checkbox" v-model="boxes" name="box" value="one" />
+
+    <input type="checkbox" v-model="boxes" name="box" value="two" />
+
+    data() {
+        return {
+            boxes: []
+        }
+    }
+```
+
+### Trabalhar com radio button no Vue
+Para trabalhar com radio button no Vue, é preciso fazer com que cada uma das opções existentes de checagem, apontem para o mesmo atributi em data()
+```
+    <input type="radio" v-model="opc" name="opc" value="one" />
+
+    <input type="radio" v-model="opc" name="opc" value="two" />
+
+    data() {
+        return {
+            opc: 'default'
+        }
+    }
+```
+
+### Trabalhar com select no Vue
+Para trabalhar com ```<select>...</select>``` no Vue, é preciso ter um array em data() onde cada chave desse array vai ser um ```<option>...</option>```, e ter um atributo separado desse array que vai guardar o valor do option selecionado. Além disso é preciso setar o v-model no ***select*** e não no option:
+
+```
+    <select v-model="selectedOption">
+        <option v-for="option in options" :key="option.val" :value="option.val">
+            {{ option.label }}
+        </option>
+    </select>
+
+    data() {
+        return {
+            options: [
+                { val: 1, label: 'vue' },
+                { val: 2, label: 'react' },
+                { val: 3, label: 'angular' }
+            ],
+
+            selectedOption: 1 /* default */
+        }
+    }
+```
+
+# [ 12 ] Usando e criando diretivas personalizadas
+
+No Vue é possível criar as própias diretivas de uma maneira muito simples. No arquivo main.js em src/ basta escrever o seguinte:
+
+```
+    Vue.directive('estilo',
+        {
+            bind(el, binding, vnode)
+            {
+                code...
+            }
+        }
+    )
+
+    Vue.directive('estilo',
+        {
+            bind(el, binding, vnode)
+            {
+                el.style.backgroundColor = 'red'
+            }
+        }
+    )
+
+    Vue.directive('estilo',
+        {
+            bind(el, binding, vnode)
+            {
+                el.style.backgroundColor = binding.value'
+            }
+        }
+    )
+```
+Agora qualquer elemento com a diretiva ```v-estilo``` será afetado pelo código dessa diretiva.
+
+```
+    <p v-estilo="'red'">Usando a diretiva v-estilo</p>
+```
+
+## Estrutura de uma diretiva:
+
+```
+    v-nome:argumento.modificador.outroModificador.etc="valor"
+```
+
+### Pegando o argumento passado na diretiva:
+
+```
+Vue.directive('cor'
+    {
+        bind(el, binding, vnode)
+        {
+            if (binding.arg.cor === 'background')
+            {
+                code...
+            }
+            else
+            {
+                code...
+            }
+        }
+    }
+)
+```
+
+### Pegando os modificadores passados na diretiva:
+
+```
+Vue.directive('cor'
+    {
+        bind(el, binding, vnode)
+        {
+            if (binding.modifiers['timeOut'])
+            {
+                setTimeOut(
+                    () => {
+                        el.style.color = 'red'
+                    },
+                    1000
+                )
+            }
+        }
+    }
+)
+```
+
+## Registrando uma diretiva localmente
+Para registrar localmente uma diretiva, basta criar o atributo "directives" no objeto exportado nos arquivos .vue e definir como valor outro objeto com os nomes das diretivas:
+
+```
+<script>
+
+    export default {
+
+        data()
+        {
+            return {...}
+        },
+
+        /* assim -> */ directives: {
+
+            estilo: {
+                bind(el, binding, vnode)
+                {
+                    el.backgroundColor = 'red'
+                }
+            }
+        },
+
+        methods: {
+            code...
+        }
+    }
+
+</script>
+```
