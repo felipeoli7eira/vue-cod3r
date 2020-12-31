@@ -458,3 +458,93 @@ Para registrar localmente uma diretiva, basta criar o atributo "directives" no o
 
 </script>
 ```
+
+# [ 12 ] Filtros e Mixins
+
+## Filtros
+
+Filtros são funções que recebem um valor, e executam algum procedimento em cima desse valor recebido e devolvem uma resposta (básicamente são helpers que você escreve).
+
+Examplo:
+
+```
+    export default {
+
+        filters: {
+
+            formatCPF(arg)
+            {
+                let arrayCPF = arg.split('')
+                arrayCPF.splice(3, 0, '.')
+                arrayCPF.splice(7, 0, '.')
+                arrayCPF.splice(11, 0, '-')
+
+                return arrayCPF.join('')
+            }
+        },
+
+        data()
+        {
+            return {
+                cpf: '00011122233'
+            }
+        }
+    }
+
+    Chamando esse filtro:
+
+    <p>{{ cpf | formatCPF }} </p>
+```
+
+## Registrando um filtro de forma Global
+```
+    Vue.filter('inverter', (args) => {
+        retur args.split('').reverse().join('')
+    })
+
+
+    usando:
+
+
+    <p> {{ 'Felipe' | inverter }} </p>
+```
+
+# Nota:
+Os filtros podem ser encadeados ( {{ 'string' | Fil | Fil | Fil }} ) e com isso o resultado de cada filtro vai sendo passado para o próximo e assim por diante
+
+#Mixins
+
+Mixins são uma alternativa de re-uso de código em diversos componentes VueJs. Na prátiva, é um arquivo .js com todas as lógicas do VueJS:
+
+```
+    Mixin.js
+
+    export default {
+
+        data()
+        {
+            code...
+        },
+
+        computed: {
+            code...
+        },
+
+        created()
+        {
+            console.log('mixin code created')
+        }
+    }
+
+
+    App.vue
+
+    import Mixin from '@/Mixin'
+
+    export default {
+
+        mixins: [ Mixin ]
+    }
+```
+
+Com isso o código dos arquivos App.vue e Mixin.js serão misturados.
