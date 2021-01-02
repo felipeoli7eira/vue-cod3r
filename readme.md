@@ -548,3 +548,82 @@ Mixins são uma alternativa de re-uso de código em diversos componentes VueJs. 
 ```
 
 Com isso o código dos arquivos App.vue e Mixin.js serão misturados.
+
+# [ 16 ] Vue Router
+
+instalação:
+
+Crie um arquivo routes.js e importe ele no main.
+O arquivo routes.js deverá importar o Vue, Vue Router e os componentes que deveão ser gerenciados pelo Vue Router.
+
+
+routes.js
+```
+import Vue from 'vue'
+import Router from 'vue-router'
+
+import Home from '@/components/Home'
+import User from '@/components/user/User'
+```
+
+Agora é preciso setar o Vue Router como o roteador da aplicação vue com o comando ```Vue.use(Router)```
+
+```
+import Vue from 'vue'
+import Router from 'vue-router'
+
+import Home from '@/components/Home'
+import User from '@/components/user/User'
+
+Vue.use(Router)
+```
+
+Feito isso, agora é preciso exportar o módulo de rotas para que no mainJS seja colocado as rotas dentro da instância Vue. Mas antes disso é preciso de fato criar as rotas da aplicação e setar as responsabilidades de cada uma para cada componente.
+
+```
+import Vue from 'vue'
+import Router from 'vue-router'
+
+import Home from '@/components/Home'
+import User from '@/components/user/User'
+
+Vue.use(Router)
+
+export default new Router(
+    {
+        mode: 'hash', // or history
+        routes: [
+            {
+                path: '/',
+                component: Home
+            },
+            {
+                path: '/usuario',
+                component: User
+            }
+        ]
+    }
+)
+```
+Pronto! agora basta ir no mainJs colocar as rotas dentro da instância VueJS.
+
+```
+import AppRoutes from '@/routes'
+
+new Vue({
+  router: AppRoutes,
+  render: h => h(App),
+}).$mount('#app')
+```
+
+## ```<router-view />```
+A tag ```<router-view />``` é usada para identificar a parte de um componente onde vai acontecer a navegação do app.
+
+## ```<router-link />```
+A tag ```<router-link />``` é usada para criar um link de navegação ao estilo SPA (não carregando a página). Algumas props podem ser passadas nessa tag:
+
+```
+<router-link to="/" exact tag="" active-class="">
+    <a>home</a>
+</router-link>
+```
