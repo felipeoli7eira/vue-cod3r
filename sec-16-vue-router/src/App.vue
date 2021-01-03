@@ -1,17 +1,21 @@
 <template>
 	<div id="app">
-		<NavBar />
-		<router-view></router-view>
+		<!-- <NavBar /> -->
+		<router-view name="menu" />
+		<transition mode="out-in" enter-active-class="animated rubberBand" leave-active-class="animated rollOut">
+			<router-view />
+		</transition>
+		<router-view name="menuFooter" />
 	</div>
 </template>
 
 <script>
 
-	import NavBar from '@/components/NavBar'
+	// import NavBar from '@/components/NavBar'
 
 export default {
 
-	components: { NavBar }
+	// components: { NavBar }
 }
 </script>
 
