@@ -11,3 +11,5 @@ new Vue(
 		render: h => h(App),
 	}
 ).$mount('#app')
+
+// parou na aula 304 módulo: StockTrad
